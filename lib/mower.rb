@@ -2,6 +2,8 @@ class Mower
   attr_accessor :x, :y, :direction
   attr_reader :errors
 
+  DIRECTIONS = ['N', 'E', 'S', 'W']
+
   def initialize(options = {})
     self.x = options[:x]
     self.y = options[:y]
@@ -9,8 +11,9 @@ class Mower
   end
 
   def valid?
+    self.errors = []
     validate
-    errors.nil? || errors.empty?
+    errors.empty?
   end
 
   def pos
@@ -23,37 +26,79 @@ class Mower
 
   def move(action)
     if action == 'M'
-      case direction
-      when 'N'
-        "#{x},#{y+1},#{direction}"
-      when 'E'
-        "#{x+1},#{y},#{direction}"
-      when 'S'
-        "#{x},#{y-1},#{direction}"
-      when 'W'
-        "#{x-1},#{y},#{direction}"
-      end
+      new_x, new_y = forward
+      "#{new_x},#{new_y},#{direction}"
     elsif action == 'L'
-      case direction
-      when 'N' then "#{x},#{y},W"
-      when 'E' then "#{x},#{y},N"
-      when 'S' then "#{x},#{y},W"
-      when 'W' then "#{x},#{y},S"
-      end
+      "#{x},#{y},#{left}"
     elsif action == 'R'
-      case direction
-      when 'N' then "#{x},#{y},E"
-      when 'E' then "#{x},#{y},S"
-      when 'S' then "#{x},#{y},W"
-      when 'W' then "#{x},#{y},N"
-      end
+      "#{x},#{y},#{right}"
     end
+  end
+
+  def move!(action)
+    original = full_pos
+    update move(action)
+    update original unless valid?
   end
 
   private
 
   attr_writer :errors
 
+  def update(pos_str)
+    parts = pos_str.split(',')
+    self.x = parts[0].to_i
+    self.y = parts[1].to_i
+    self.direction = parts[2]
+  end
+
   def validate
+    validate_pos('x', x)
+    validate_pos('y', y)
+    validate_direction
+  end
+
+  def validate_pos(name, value)
+    unless is_int?(value)
+      errors << "#{name}, is not an integer" and return
+    end
+    errors << "#{name}, must be positive" if value < 0
+  end
+
+  def validate_direction
+    unless DIRECTIONS.include?(direction)
+      errors << "#{direction} is not a valid direction"
+    end
+  end
+
+  def forward
+    case direction
+    when 'N' then return x, y + 1
+    when 'E' then return x + 1, y
+    when 'S' then return x, y - 1
+    when 'W' then return x - 1, y
+    end
+  end
+
+  def right
+    index = DIRECTIONS.find_index(direction)
+    if index == (DIRECTIONS.count - 1)
+      DIRECTIONS[0]
+    else
+      DIRECTIONS[index + 1]
+    end
+  end
+
+  def left
+    index = DIRECTIONS.find_index(direction)
+    if index == 0
+      DIRECTIONS[DIRECTIONS.count - 1]
+    else
+      DIRECTIONS[index - 1]
+    end
+  end
+
+  def is_int?(val)
+    Integer val rescue false
   end
 end
