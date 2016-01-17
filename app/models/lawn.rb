@@ -16,6 +16,7 @@ class Lawn < ActiveRecord::Base
     until terminate? do
       move!
     end
+    errors.any?
   end
 
   private
