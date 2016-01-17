@@ -140,17 +140,16 @@ describe LawnController, type: :controller do
       let(:x1) { 0 }
       let(:y1) { 0 }
       let(:heading1) { 'E' }
-      let(:command1) { 'MMMLMM' }
+      let(:command1) { 'MRMLMM' }
       let(:x2) { 3 }
       let(:y2) { 0 }
       let(:heading2) { 'N' }
-      let(:command2) { 'RMMMRM' }
+      let(:command2) { 'LMMMRM' }
 
       it 'should return an error' do
         post :execute, id: lawn.id
         errors = json_response['errors']
         expect(errors.first).to eq(['base', ['Oops, looks like a mower ran off the lawn']])
-
       end
     end
   end

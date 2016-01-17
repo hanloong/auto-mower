@@ -15,13 +15,15 @@ class Mower < ActiveRecord::Base
     super(only: [:id, :x, :y, :heading, :commands])
   end
 
-  def move!
+  def move
     return false if path.empty?
     self.x, self.y, self.heading = translate(path.first)
-    if valid?
-      self.commands = path.last(path.count - 1).join
-      save
-    end
+    self.commands = path.last(path.count - 1).join
+  end
+
+  def move!
+    move
+    save if valid?
   end
 
   def complete?
@@ -35,7 +37,7 @@ class Mower < ActiveRecord::Base
   private
 
   def path
-    commands.chars
+    commands ? commands.chars : []
   end
 
   def translate(action)

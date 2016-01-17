@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Lawn, type: :model do
   let(:width) { 3 }
   let(:height) { 4 }
-  let(:mower) { Mower.new(x: 1, y: 2) }
-  let(:another_mower) { Mower.new(x: 2, y: 2) }
+  let(:mower) { Mower.new(x: 1, y: 2, commands: 'MM') }
+  let(:another_mower) { Mower.new(x: 2, y: 2, commands: 'MM') }
   let(:mowers) { [mower, another_mower] }
   let(:subject) { Lawn.new width: width, height: height, mowers: mowers }
 
@@ -25,8 +25,8 @@ describe Lawn, type: :model do
     end
 
     it 'should call move 2 times' do
-      expect(mower).to receive(:move!).twice
-      expect(another_mower).to receive(:move!).twice
+      expect(mower).to receive(:move).twice
+      expect(another_mower).to receive(:move).twice
       subject.mow!
     end
 
@@ -42,8 +42,8 @@ describe Lawn, type: :model do
     end
 
     context 'when a mower goes nuts' do
-      let(:mower) { Mower.new(x: 11, y: 2) }
-      let(:another_mower) { Mower.new(x: 2, y: 2) }
+      let(:mower) { Mower.new(x: 11, y: 2, commands: 'MM') }
+      let(:another_mower) { Mower.new(x: 2, y: 2, commands: 'MM') }
 
       it 'should not call move' do
         expect(mower).not_to receive(:move!)

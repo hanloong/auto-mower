@@ -13,9 +13,11 @@ class Lawn < ActiveRecord::Base
   end
 
   def mow!
-    until terminate? do
+    max_commands.times do
+      break if terminate?
       move!
     end
+    save_mowers if errors.empty?
     errors.empty?
   end
 
@@ -25,12 +27,20 @@ class Lawn < ActiveRecord::Base
     complete? || mower_errors?
   end
 
+  def max_commands
+    mowers.map { |m| m.commands.length }.max
+  end
+
   def complete?
     !mowers.map(&:complete?).include?(false)
   end
 
   def move!
-    mowers.each { |m| m.move! }
+    mowers.each { |m| m.move }
+  end
+
+  def save_mowers
+    mowers.each { |m| m.save }
   end
 
   def mower_errors?
@@ -45,7 +55,7 @@ class Lawn < ActiveRecord::Base
   end
 
   def out_of_bounds
-    if mowers.select { |m| m.x > width || m.y > height }.any?
+    if mowers.select { |m| m.x < 0 || m.y < 0 || m.x > width || m.y > height }.any?
       errors.add :base, 'Oops, looks like a mower ran off the lawn'
     end
   end
