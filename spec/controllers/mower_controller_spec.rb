@@ -22,6 +22,15 @@ describe MowerController, type: :controller do
       end.to change { Mower.count }.by(1)
       expect(Mower.last.heading).to eq 'N'
     end
+
+    context 'when invalid' do
+      let(:heading) { 'F' }
+      it 'should return errors' do
+        post :create, params
+        errors = json_response['errors']
+        expect(errors.count).to eq(1)
+      end
+    end
   end
 
   describe '#show' do

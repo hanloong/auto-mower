@@ -1,5 +1,5 @@
 class Lawn < ActiveRecord::Base
-  has_many :mowers
+  has_many :mowers, dependent: :destroy
 
   validates_presence_of :width, :height
   validates_numericality_of :width, greater_than: 0
