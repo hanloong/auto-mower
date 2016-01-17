@@ -5,7 +5,7 @@ class Lawn < ActiveRecord::Base
   validates_numericality_of :width, greater_than: 0
   validates_numericality_of :height, greater_than: 0
 
-  def to_json(options)
+  def to_json(options = {})
     super(only: [:id, :width, :height],
           include: [
             mowers: {only: [:id, :x ,:y, :heading, :commands]}

@@ -1,10 +1,6 @@
 class LawnController < ApplicationController
   before_action :set_lawn, except: :create
 
-  def show
-    render json: @lawn
-  end
-
   def create
     lawn = Lawn.create lawn_params
     if lawn.persisted?
@@ -13,7 +9,15 @@ class LawnController < ApplicationController
     render json: { errors: lawn.errors }
   end
 
+  def show
+    render json: [] and return unless @lawn
+
+    render json: @lawn
+  end
+
   def update
+    render json: [] and return unless @lawn
+
     if @lawn.update lawn_params
       render json: @lawn and return
     end
@@ -21,6 +25,8 @@ class LawnController < ApplicationController
   end
 
   def destroy
+    render json: [] and return unless @lawn
+
     @lawn.destroy
     render json: { status: 'ok' }
   end
@@ -36,6 +42,6 @@ class LawnController < ApplicationController
   end
 
   def set_lawn
-    @lawn = Lawn.find params[:id]
+    @lawn = Lawn.find_by id: params[:id]
   end
 end
