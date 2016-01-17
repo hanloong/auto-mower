@@ -1,4 +1,4 @@
-# Lawn Mowing App
+# Lawn Mowing App - Part 1
 
 This project contains a small Ruby app that simulates mowers mowing a yard based on a some text input.
 
@@ -33,5 +33,5 @@ MMRMMRMRRM
 ## Running
 
 ```bash
-% ruby run.rb <input-file-name>
+% ./run.rb <input-file-name>
 ```
