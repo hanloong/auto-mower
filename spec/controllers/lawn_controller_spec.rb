@@ -28,7 +28,7 @@ describe LawnController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        get :show, id: 3
+        get :show, id: 29
         expect(response.body).to eq('[]')
       end
     end
@@ -46,7 +46,7 @@ describe LawnController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        put :update, id: 3
+        put :update, id: 320
         expect(response.body).to eq('[]')
       end
     end
@@ -63,7 +63,7 @@ describe LawnController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        delete :destroy, id: 3
+        delete :destroy, id: 33
         expect(response.body).to eq('[]')
       end
     end

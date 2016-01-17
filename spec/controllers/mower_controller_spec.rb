@@ -43,7 +43,7 @@ describe MowerController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        get :show, id: 3, lawn_id: lawn.id
+        get :show, id: 33, lawn_id: lawn.id
         expect(response.body).to eq('[]')
       end
     end
@@ -62,7 +62,7 @@ describe MowerController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        put :update, id: 3, lawn_id: lawn.id
+        put :update, id: 31, lawn_id: lawn.id
         expect(response.body).to eq('[]')
       end
     end
@@ -80,7 +80,7 @@ describe MowerController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        delete :destroy, id: 3, lawn_id: lawn.id
+        delete :destroy, id: 32, lawn_id: lawn.id
         expect(response.body).to eq('[]')
       end
     end
