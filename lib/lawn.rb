@@ -6,4 +6,10 @@ class Lawn
     self.height = options[:height]
     self.mowers = options[:mowers] || []
   end
+
+  def complete?
+  end
+
+  def crash?
+  end
 end
