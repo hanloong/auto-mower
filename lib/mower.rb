@@ -39,22 +39,76 @@ class Mower
   def move!
     original = full_pos
     if path.any?
-      update move path.first
+      update(move(path.first))
       if valid?
         path.shift
       else
-        update original
+        update(original)
       end
     end
+  end
+
+  def move_with_action!(action)
+    update(move(action))
   end
 
   def complete?
     path.empty?
   end
 
+  # Assume its only moving either one square along x or y
+  def move_to(pos_x, pos_y)
+    diff_x, diff_y = diff(pos_x, pos_y)
+    if north?
+      if diff_x > 0
+        'RM'
+      elsif diff_x < 0
+        'LM'
+      elsif diff_y > 0
+        'M'
+      elsif diff_y < 0
+        'RRM'
+      end
+    elsif east?
+      if diff_x > 0
+        'M'
+      elsif diff_x < 0
+        'RRM'
+      elsif diff_y > 0
+        'LM'
+      elsif diff_y < 0
+        'RM'
+      end
+    elsif south?
+      if diff_x > 0
+        'LM'
+      elsif diff_x < 0
+        'RM'
+      elsif diff_y > 0
+        'RRM'
+      elsif diff_y < 0
+        'M'
+      end
+    elsif west?
+      if diff_x > 0
+        'RRM'
+      elsif diff_x < 0
+        'M'
+      elsif diff_y > 0
+        'RM'
+      elsif diff_y < 0
+        'LM'
+      end
+    end
+  end
+
   private
 
   attr_writer :errors
+
+  def diff(x2, y2)
+    return (x2 - x), (y2 - y)
+  end
 
   def update(pos_str)
     parts = pos_str.split(' ')
@@ -111,5 +165,21 @@ class Mower
 
   def is_int?(val)
     Integer val rescue false
+  end
+
+  def north?
+    self.direction == 'N'
+  end
+
+  def east?
+    self.direction == 'E'
+  end
+
+  def west?
+    self.direction == 'W'
+  end
+
+  def south?
+    self.direction == 'S'
   end
 end

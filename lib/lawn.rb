@@ -1,3 +1,5 @@
+require_relative 'mower'
+
 class Lawn
   attr_accessor :mowers, :width, :height
 

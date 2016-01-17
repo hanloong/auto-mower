@@ -1,9 +1,6 @@
 #!/usr/bin/ruby
 
-require_relative 'lib/mower'
-require_relative 'lib/lawn'
-require_relative 'lib/parser'
-require 'pry'
+require_relative 'lib/solver'
 
 if ARGV.count != 1
   'Please pass in path to input file as argument'
@@ -17,8 +14,10 @@ if file.nil?
   exit
 end
 
-parser = Parser.new file.read
-lawn = Lawn.new parser.lawn_size.merge(mowers: parser.mowers)
+input = file.read
+width, height, mowers_count = input.split(' ').map(&:to_i)
+solver = Solver.new width: width, height: height, mowers_count: mowers_count
 
-lawn.mow!
-puts lawn.output.join("\n")
+solver.solve.each do |path|
+  puts "#{path[:start]}\n#{path[:path]}\n\n"
+end

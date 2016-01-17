@@ -1,5 +1,4 @@
 require_relative '../lib/mower'
-require 'pry'
 
 describe Mower do
   let(:x) { 0 }
@@ -74,6 +73,52 @@ describe Mower do
       expect(subject.full_pos).to eq '0 1 N'
       subject.move!
       expect(subject.full_pos).to eq '0 2 N'
+    end
+  end
+
+  describe '#move_to' do
+    let(:x) { 0 }
+    let(:y) { 0 }
+    let(:direction) { 'N' }
+
+    it 'should plot the path between two points' do
+      expect(subject.move_to(1, 0)).to eq 'RM'
+      expect(subject.move_to(0, 1)).to eq 'M'
+      expect(subject.move_to(0, -1)).to eq 'RRM'
+      expect(subject.move_to(-1, 0)).to eq 'LM'
+    end
+
+    context 'when facing east' do
+      let(:direction) { 'E' }
+
+      it 'should plot the path between two points' do
+        expect(subject.move_to(1, 0)).to eq 'M'
+        expect(subject.move_to(0, 1)).to eq 'LM'
+        expect(subject.move_to(0, -1)).to eq 'RM'
+        expect(subject.move_to(-1, 0)).to eq 'RRM'
+      end
+    end
+
+    context 'when facing east' do
+      let(:direction) { 'S' }
+
+      it 'should plot the path between two points' do
+        expect(subject.move_to(1, 0)).to eq 'LM'
+        expect(subject.move_to(0, 1)).to eq 'RRM'
+        expect(subject.move_to(0, -1)).to eq 'M'
+        expect(subject.move_to(-1, 0)).to eq 'RM'
+      end
+    end
+
+    context 'when facing east' do
+      let(:direction) { 'W' }
+
+      it 'should plot the path between two points' do
+        expect(subject.move_to(1, 0)).to eq 'RRM'
+        expect(subject.move_to(0, 1)).to eq 'RM'
+        expect(subject.move_to(0, -1)).to eq 'LM'
+        expect(subject.move_to(-1, 0)).to eq 'M'
+      end
     end
   end
 end

@@ -1,5 +1,3 @@
-require 'pry'
-
 class Parser
   attr_accessor :data
 
