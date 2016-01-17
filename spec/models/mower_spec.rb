@@ -6,6 +6,7 @@ describe Mower, type: :model do
   let(:heading) { 'N' }
   let(:commands) { 'RMMLMLMM' }
   let(:subject) { Mower.new x: x, y: y, heading: heading, commands: commands }
+
   it { should validate_presence_of(:x) }
   it { should validate_presence_of(:y) }
   it { should validate_presence_of(:heading) }

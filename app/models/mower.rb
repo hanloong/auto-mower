@@ -28,6 +28,10 @@ class Mower < ActiveRecord::Base
     commands.blank?
   end
 
+  def pos
+    "#{x} #{y}"
+  end
+
   private
 
   def path
