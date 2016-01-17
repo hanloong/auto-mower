@@ -1,4 +1,4 @@
-# Lawn Mowing App - Part 2
+# Lawn Mowing App - Part 3
 
 This project contains a small Ruby app that simulates mowers mowing a yard based on a some text input.
 
@@ -13,27 +13,8 @@ Make sure `Ruby` is installed first.
 % bundle install
 ```
 
-## Input/Output Samples
-
-### Input Example
-```
-5 5 3
-```
-
-### Should output
-```
-0 0 E
-MMMMLMLMM
-
-1 1 W
-MRMRMMMMLM
-
-3 3 W
-MMMRMRMMM
-```
-
 ## Running
 
 ```bash
-% ./run.rb <input-file-name>
+% rails server
 ```
