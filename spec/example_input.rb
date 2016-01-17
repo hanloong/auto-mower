@@ -8,4 +8,10 @@ module InputExamples
       MMRMMRMRRM
     EOS
   end
+
+  def part_2_input
+    <<-EOS.gsub(/^ {6}/, '')
+      5 5 3
+    EOS
+  end
 end
