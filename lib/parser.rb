@@ -16,12 +16,12 @@ class Parser
   end
 
   def mower_count
-    (rows.count - 1)/2
+    (rows.count - 1) / 2
   end
 
   def mowers
-    pairs.map do |m|
-      build_pos(m.first).merge(path: m.last.chars)
+    @mowers ||= pairs.map do |p|
+      Mower.new build_pos(p.first).merge(path: p.last.chars)
     end
   end
 
@@ -29,11 +29,7 @@ class Parser
 
   def build_pos(val)
     x, y, dir = val.split(' ')
-    {
-      x: x.to_i,
-      y: y.to_i,
-      direction: dir
-    }
+    {x: x.to_i, y: y.to_i, direction: dir}
   end
 
   def pairs

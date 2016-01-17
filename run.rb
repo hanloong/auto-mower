@@ -18,16 +18,7 @@ if file.nil?
 end
 
 parser = Parser.new file.read
+lawn = Lawn.new parser.lawn_size.merge(mowers: parser.mowers)
 
-mowers = []
-
-parser.mowers.each do |m|
-  mowers << Mower.new(m)
-end
-
-lawn = Lawn.new parser.lawn_size.merge(mowers: mowers)
-lawn.mow
-
-lawn.mowers.each do |mower|
-  puts mower.full_pos
-end
+lawn.mow!
+puts lawn.output.join("\n")

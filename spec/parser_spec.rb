@@ -1,7 +1,10 @@
 require_relative '../lib/parser'
+require_relative 'example_input'
 
 describe Parser do
-  let(:input) { valid_input }
+  include InputExamples
+
+  let(:input) { part_1_input }
   let(:subject) { Parser.new(input) }
 
   it 'should init with raw input data' do
@@ -23,8 +26,7 @@ describe Parser do
   describe '#mowers' do
     let(:mower_hash) do
         {
-          x: 1,
-          y: 2,
+          x: 1, y: 2,
           direction: 'N',
           path: %w(L M L M L M L M M)
         }
@@ -37,15 +39,5 @@ describe Parser do
       mower = subject.mowers.first
       expect(mower).to eq mower_hash
     end
-  end
-
-  def valid_input
-    <<-EOS.gsub(/^ {6}/, '')
-      5 5
-      1 2 N
-      LMLMLMLMM
-      3 3 E
-      MMRMMRMRRM
-    EOS
   end
 end

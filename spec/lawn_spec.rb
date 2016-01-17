@@ -13,4 +13,8 @@ describe Lawn do
     expect(subject.height).to eq height
     expect(subject.mowers.count).to eq 2
   end
+
+  describe '#mow!' do
+
+  end
 end

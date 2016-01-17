@@ -7,18 +7,24 @@ class Lawn
     self.mowers = options[:mowers] || []
   end
 
+  def mow!
+    until complete? || error? do
+      move!
+    end
+  end
+
+  def output
+    mowers.map(&:full_pos)
+  end
+
+  private
+
   def complete?
     !mowers.map(&:complete?).include?(false)
   end
 
   def move!
     mowers.each { |m| m.move! }
-  end
-
-  def mow
-    until complete? || error? do
-      move!
-    end
   end
 
   def error?
