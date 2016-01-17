@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :lawn, except: [:index, :edit, :new] do
     resources :mower, except: [:index, :edit, :new]
-    post :execute
+    post :execute, on: :collection
   end
 end

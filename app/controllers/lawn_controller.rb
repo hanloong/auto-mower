@@ -32,7 +32,7 @@ class LawnController < ApplicationController
   end
 
   def execute
-    if @lawn.move!
+    if @lawn.mow!
       render json: @lawn
     else
       render json: { errors: @lawn.errors }
