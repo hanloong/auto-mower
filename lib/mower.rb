@@ -1,5 +1,5 @@
 class Mower
-  attr_accessor :x, :y, :direction
+  attr_accessor :x, :y, :direction, :path
   attr_reader :errors
 
   DIRECTIONS = ['N', 'E', 'S', 'W']
@@ -8,6 +8,7 @@ class Mower
     self.x = options[:x]
     self.y = options[:y]
     self.direction = options[:direction]
+    self.path = options[:path]
   end
 
   def valid?
@@ -17,28 +18,38 @@ class Mower
   end
 
   def pos
-    "#{x},#{y}"
+    "#{x} #{y}"
   end
 
   def full_pos
-    "#{pos},#{direction}"
+    "#{pos} #{direction}"
   end
 
   def move(action)
     if action == 'M'
       new_x, new_y = forward
-      "#{new_x},#{new_y},#{direction}"
+      "#{new_x} #{new_y} #{direction}"
     elsif action == 'L'
-      "#{x},#{y},#{left}"
+      "#{x} #{y} #{left}"
     elsif action == 'R'
-      "#{x},#{y},#{right}"
+      "#{x} #{y} #{right}"
     end
   end
 
-  def move!(action)
+  def move!
     original = full_pos
-    update move(action)
-    update original unless valid?
+    if path.any?
+      update move path.first
+      if valid?
+        path.shift
+      else
+        update original
+      end
+    end
+  end
+
+  def complete?
+    path.empty?
   end
 
   private
@@ -46,7 +57,7 @@ class Mower
   attr_writer :errors
 
   def update(pos_str)
-    parts = pos_str.split(',')
+    parts = pos_str.split(' ')
     self.x = parts[0].to_i
     self.y = parts[1].to_i
     self.direction = parts[2]

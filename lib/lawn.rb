@@ -8,8 +8,28 @@ class Lawn
   end
 
   def complete?
+    !mowers.map(&:complete?).include?(false)
   end
 
-  def crash?
+  def move!
+    mowers.each { |m| m.move! }
+  end
+
+  def mow
+    until complete? || error? do
+      move!
+    end
+  end
+
+  def error?
+    collision? || out_of_bounds?
+  end
+
+  def collision?
+    mowers.map(&:pos).uniq.count < mowers.count
+  end
+
+  def out_of_bounds?
+    mowers.select { |m| m.x > width || m.y > height }.any?
   end
 end

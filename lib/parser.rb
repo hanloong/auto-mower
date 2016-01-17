@@ -8,7 +8,11 @@ class Parser
   end
 
   def lawn_size
-    rows.first.split(' ').map(&:to_i)
+    pos = rows.first.split(' ').map(&:to_i)
+    {
+      width: pos.first,
+      height: pos.last
+    }
   end
 
   def mower_count
@@ -17,14 +21,20 @@ class Parser
 
   def mowers
     pairs.map do |m|
-      {
-        start: m.first.gsub(/ /, ','),
-        path: m.last.chars
-      }
+      build_pos(m.first).merge(path: m.last.chars)
     end
   end
 
   private
+
+  def build_pos(val)
+    x, y, dir = val.split(' ')
+    {
+      x: x.to_i,
+      y: y.to_i,
+      direction: dir
+    }
+  end
 
   def pairs
     @paris ||= tail.each_slice(2).to_a

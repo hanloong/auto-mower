@@ -5,12 +5,14 @@ describe Mower do
   let(:x) { 0 }
   let(:y) { 1 }
   let(:direction) { 'N' }
-  let(:subject) { Mower.new(x: x, y: y, direction: direction) }
+  let(:path) { %w(L R M R M) }
+  let(:subject) { Mower.new(x: x, y: y, direction: direction, path: path) }
 
   it 'should initialise with positions' do
     expect(subject.x).to eq(0)
     expect(subject.y).to eq(1)
     expect(subject.direction).to eq('N')
+    expect(subject.path).to eq path
   end
 
   describe '#valid?' do
@@ -46,32 +48,32 @@ describe Mower do
 
   describe '#pos' do
     it 'should return a string representation of the mowers position' do
-      expect(subject.pos).to eq '0,1'
+      expect(subject.pos).to eq '0 1'
     end
   end
 
   describe '#pos_with_direction' do
     it 'should return the postion with direction' do
-      expect(subject.full_pos).to eq '0,1,N'
+      expect(subject.full_pos).to eq '0 1 N'
     end
   end
 
   describe '#move' do
     it 'should return the position after move' do
-      expect(subject.move('R')).to eq '0,1,E'
-      expect(subject.move('M')).to eq '0,2,N'
-      expect(subject.move('L')).to eq '0,1,W'
+      expect(subject.move('R')).to eq '0 1 E'
+      expect(subject.move('M')).to eq '0 2 N'
+      expect(subject.move('L')).to eq '0 1 W'
     end
   end
 
   describe '#move!' do
     it 'should move the mower' do
-      subject.move! 'R'
-      expect(subject.full_pos).to eq '0,1,E'
-      subject.move! 'M'
-      expect(subject.full_pos).to eq '1,1,E'
-      subject.move! 'L'
-      expect(subject.full_pos).to eq '1,1,N'
+      subject.move!
+      expect(subject.full_pos).to eq '0 1 W'
+      subject.move!
+      expect(subject.full_pos).to eq '0 1 N'
+      subject.move!
+      expect(subject.full_pos).to eq '0 2 N'
     end
   end
 end

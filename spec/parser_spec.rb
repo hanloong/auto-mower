@@ -10,7 +10,7 @@ describe Parser do
 
   describe '#lawn_size' do
     it 'should return a tuple of width height' do
-      expect(subject.lawn_size).to eq [5, 5]
+      expect(subject.lawn_size).to eq({width: 5, height: 5})
     end
   end
 
@@ -22,10 +22,12 @@ describe Parser do
 
   describe '#mowers' do
     let(:mower_hash) do
-      {
-        start: '1,2,N',
-        path: %w(L M L M L M L M M)
-      }
+        {
+          x: 1,
+          y: 2,
+          direction: 'N',
+          path: %w(L M L M L M L M M)
+        }
     end
     it 'should return multiple rows' do
       expect(subject.mowers.count).to eq 2
