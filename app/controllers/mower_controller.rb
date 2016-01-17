@@ -3,6 +3,7 @@ class MowerController < ApplicationController
   before_action :set_mower, except: :create
 
   def show
+    render json: [] and return if @lawn.nil? || @mower.nil?
     render json: @mower
   end
 
@@ -15,15 +16,19 @@ class MowerController < ApplicationController
   end
 
   def update
+    render json: [] and return if @lawn.nil? || @mower.nil?
+
     if @mower.update mower_params
       render json: @mower and return
     end
-    render json: { errors: mower.errors }
+    render json: { errors: @mower.errors }
   end
 
   def destroy
+    render json: [] and return if @lawn.nil? || @mower.nil?
+
     @mower.destroy
-    render json: @mower
+    render json: { status: 'ok' }
   end
 
   private
@@ -33,10 +38,10 @@ class MowerController < ApplicationController
   end
 
   def set_mower
-    @mower = Mower.find params[:id]
+    @mower = Mower.find_by id: params[:id]
   end
 
   def set_lawn
-    @lawn = Lawn.find params[:lawn_id]
+    @lawn = Lawn.find_by id: params[:lawn_id]
   end
 end

@@ -3,7 +3,7 @@ class Mower < ActiveRecord::Base
 
   validates_presence_of :x, :y, :heading, :commands
 
-  def to_json(options)
+  def to_json(options = {})
     super(only: [:id, :x, :y, :heading, :commands])
   end
 end
