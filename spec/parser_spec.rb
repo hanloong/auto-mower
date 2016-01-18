@@ -24,20 +24,8 @@ describe Parser do
   end
 
   describe '#mowers' do
-    let(:mower_hash) do
-        {
-          x: 1, y: 2,
-          direction: 'N',
-          path: %w(L M L M L M L M M)
-        }
-    end
     it 'should return multiple rows' do
       expect(subject.mowers.count).to eq 2
-    end
-
-    it 'should return formatted mower string' do
-      mower = subject.mowers.first
-      expect(mower).to eq mower_hash
     end
   end
 end
