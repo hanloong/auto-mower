@@ -2,7 +2,13 @@
 
 [![Build Status](https://travis-ci.org/hanloong/auto-mower.svg?branch=master)](https://travis-ci.org/hanloong/auto-mower)
 
-This project contains a small Ruby app that simulates mowers mowing a yard based on a some text input.
+This Project contains an Rails based API for mowing lawns. The API is hosted on heroku at [https://auto-mower-api.herokuapp.com](https://auto-mower-api.herokuapp.com)
+
+## Other Branches
+
+The solutions to the other sections can be found on the other Branches
+ - [part-1](https://github.com/hanloong/auto-mower/tree/part-1)
+ - [part-2](https://github.com/hanloong/auto-mower/tree/part-2)
 
 ## Setup
 
@@ -19,4 +25,239 @@ Make sure `Ruby` is installed first.
 
 ```bash
 % rails server
+```
+
+## Example Usage
+
+### POST `/lawn`
+
+Creates a new lawn record.
+
+Request
+```json
+{
+    "width": 5,
+    "height": 5
+}
+```
+
+Response
+```json
+{
+  "id": 4,
+  "width": 5,
+  "height": 5,
+  "mowers": []
+}
+```
+
+### GET `/lawn/:id`
+
+Returns an existing lawn record by id
+
+Request
+```
+GET: /lawn/4
+```
+
+Response
+```json
+{
+  "id": 4,
+  "width": 5,
+  "height": 5,
+  "mowers": []
+}
+```
+### PUT `/lawn/4`
+
+Updates an existing lawn record by id
+
+Request
+```json
+{
+    "width": 3,
+    "height": 3
+}
+```
+
+Response
+```json
+{
+  "id": 4,
+  "width": 3,
+  "height": 3,
+  "mowers": []
+}
+```
+### DELETE `/lawn/:id`
+
+Deletes an existing lawn record by id
+
+Request
+```
+DELETE: /lawn/4
+```
+
+Response
+```json
+{
+  "status": "ok"
+}
+```
+
+### POST `/lawn/:lawn_id/mower`
+
+Creates a new mower within the specified lawn
+
+Request
+```json
+POST: /lawn/1/mower
+
+{
+    "x": 4,
+    "y": 5,
+    "heading": "E",
+    "commands": "MLRMM"
+}
+```
+
+Response
+```json
+{
+  "id": 4,
+  "x": 4,
+  "y": 5,
+  "heading": "E",
+  "commands": "MLRMM"
+}
+```
+### GET '/lawn/:lawn_id/mower'
+
+Returns all mowers for the lawn by id
+
+Request
+```
+GET: /lawn/1/mower
+```
+
+Response
+```json
+[
+  {
+    "id": 5,
+    "x": 1,
+    "y": 2,
+    "heading": "N",
+    "commands": "LMLMLMLMM",
+    "lawn_id": 2,
+    "created_at": "2016-01-18T00:46:01.240Z",
+    "updated_at": "2016-01-18T00:46:01.240Z"
+  },
+  {
+    "id": 6,
+    "x": 3,
+    "y": 3,
+    "heading": "E",
+    "commands": "MMRMMRMRRM",
+    "lawn_id": 2,
+    "created_at": "2016-01-18T00:46:26.495Z",
+    "updated_at": "2016-01-18T00:46:26.495Z"
+  }
+]
+```
+
+### GET `/lawn/:lawn_id/mower/:id`
+
+Returns an existing mower by id
+
+Request
+```json
+POST: /lawn/1/mower/4
+```
+
+Response
+```json
+{
+  "id": 4,
+  "x": 4,
+  "y": 5,
+  "heading": "E",
+  "commands": "MLRMM"
+}
+```
+
+### PUT `/lawn/:lawn_id/mower/:id`
+
+Updates an existing mower by id
+
+Request
+```json
+PUT: /lawn/1/mower/4
+
+{
+    "x": 0,
+    "y": 0,
+    "heading": "N",
+    "commands": "MLRMM"
+}
+```
+
+Response
+```json
+{
+  "id": 4,
+  "x": 0,
+  "y": 0,
+  "heading": "N",
+  "commands": "MLRMM"
+}
+```
+### DELETE `/lawn/:lawn_id/:id`
+
+Deletes an existing mower record by id
+
+Request
+```
+DELETE: /lawn/1/mower/4
+```
+
+Response
+```json
+{
+  "status": "ok"
+}
+```
+
+### POST `/lawn/:id/execute`
+
+Runs the mowers across the lawns outputting the final state.
+
+```josn
+POST /lawn/1/execute
+```
+
+Response
+```json
+{
+  "id": 2,
+  "width": 5,
+  "height": 5,
+  "mowers": [
+    {
+      "id": 5,
+      "x": 1,
+      "y": 3,
+      "heading": "N",
+      "commands": ""
+    },
+    {
+      "id": 6,
+      "x": 5,
+      "y": 1,
+      "heading": "E",
+      "commands": ""
+    }
+  ]
+}
 ```
