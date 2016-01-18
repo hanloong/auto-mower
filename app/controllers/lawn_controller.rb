@@ -7,7 +7,7 @@ class LawnController < ApplicationController
     if lawn.persisted?
       render json: lawn and return
     end
-    render json: { errors: lawn.errors }
+    render json: { errors: lawn.errors }, status: :bad_request
   end
 
   def show
@@ -18,7 +18,7 @@ class LawnController < ApplicationController
     if @lawn.update lawn_params
       render json: @lawn and return
     end
-    render json: { errors: lawn.errors }
+    render json: { errors: lawn.errors }, status: :bad_request
   end
 
   def destroy
@@ -30,7 +30,7 @@ class LawnController < ApplicationController
     if @lawn.mow!
       render json: @lawn
     else
-      render json: { errors: @lawn.errors }
+      render json: { errors: @lawn.errors }, status: :bad_request
     end
   end
 
@@ -46,7 +46,7 @@ class LawnController < ApplicationController
 
   def check_lawn
     unless @lawn
-      render json: {message: 'lawn not found'} and return
+      render json: {message: 'lawn not found'}, status: :not_found and return
     end
   end
 end

@@ -242,3 +242,9 @@ Response
   ]
 }
 ```
+
+## Todos
+
+What project would be complete without a list of things to improve on.
+
+ - **Better Collision Detection** the current algorithm only detects when two or more mowers are on the same block, it should really check that they cannot swap block (unless these are jumping mowers).
