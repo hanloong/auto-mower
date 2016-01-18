@@ -3,7 +3,6 @@
 require_relative 'lib/mower'
 require_relative 'lib/lawn'
 require_relative 'lib/parser'
-require 'pry'
 
 if ARGV.count != 1
   'Please pass in path to input file as argument'

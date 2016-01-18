@@ -1,5 +1,4 @@
 require_relative '../lib/mower'
-require 'pry'
 
 describe Mower do
   let(:x) { 0 }
