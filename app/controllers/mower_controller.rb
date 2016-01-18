@@ -1,14 +1,11 @@
 class MowerController < ApplicationController
   before_action :set_lawn
+  before_action :check_lawn
   before_action :set_mower, except: :create
+  before_action :check_mower, except: :create
 
   def show
-    render json: [] and return if @lawn.nil? || @mower.nil?
     render json: @mower
-  end
-
-  def index
-    render json: @lawn.mowers
   end
 
   def create
@@ -20,8 +17,6 @@ class MowerController < ApplicationController
   end
 
   def update
-    render json: [] and return if @lawn.nil? || @mower.nil?
-
     if @mower.update mower_params
       render json: @mower and return
     end
@@ -29,8 +24,6 @@ class MowerController < ApplicationController
   end
 
   def destroy
-    render json: [] and return if @lawn.nil? || @mower.nil?
-
     @mower.destroy
     render json: { status: 'ok' }
   end
@@ -41,11 +34,23 @@ class MowerController < ApplicationController
     params.permit(:x, :y, :heading, :commands)
   end
 
-  def set_mower
-    @mower = Mower.find_by id: params[:id]
-  end
-
   def set_lawn
     @lawn = Lawn.find_by id: params[:lawn_id]
+  end
+
+  def set_mower
+    @mower = @lawn.mowers.find_by id: params[:id]
+  end
+
+  def check_lawn
+    unless @lawn
+      render json: {message: 'lawn not found'} and return
+    end
+  end
+
+  def check_mower
+    unless @mower
+      render json: {message: 'mower not found'} and return
+    end
   end
 end

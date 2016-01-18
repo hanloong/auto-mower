@@ -15,15 +15,6 @@ describe MowerController, type: :controller do
     }
   end
 
-  describe '#idex' do
-    let!(:mower) { Mower.create params }
-
-    it 'should return a lawn object in array' do
-      get :index,lawn_id: mower.lawn_id
-      expect(response.body).to eq([mower.to_json])
-    end
-  end
-
   describe '#create' do
     it 'should create a new mower' do
       expect do
@@ -50,10 +41,17 @@ describe MowerController, type: :controller do
       expect(response.body).to eq(mower.to_json)
     end
 
-    context 'when id is invalid' do
+    context 'when mower id is invalid' do
       it 'should return nothing' do
         get :show, id: 33, lawn_id: lawn.id
-        expect(response.body).to eq('[]')
+        expect(json_response).to eq({'message' => 'mower not found'})
+      end
+    end
+
+    context 'when lawn id is invalid' do
+      it 'should return nothing' do
+        get :show, id: 1, lawn_id: 44
+        expect(json_response).to eq({'message' => 'lawn not found'})
       end
     end
   end
@@ -72,7 +70,7 @@ describe MowerController, type: :controller do
     context 'when id is invalid' do
       it 'should return nothing' do
         put :update, id: 31, lawn_id: lawn.id
-        expect(response.body).to eq('[]')
+        expect(json_response).to eq({'message' => 'mower not found'})
       end
     end
   end
@@ -90,7 +88,7 @@ describe MowerController, type: :controller do
     context 'when id is invalid' do
       it 'should return nothing' do
         delete :destroy, id: 32, lawn_id: lawn.id
-        expect(response.body).to eq('[]')
+        expect(json_response).to eq({'message' => 'mower not found'})
       end
     end
   end

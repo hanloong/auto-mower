@@ -28,8 +28,8 @@ describe LawnController, type: :controller do
 
     context 'when id is invalid' do
       it 'should return nothing' do
-        get :show, id: 29
-        expect(response.body).to eq('[]')
+        get :show, id: 59
+        expect(json_response).to eq({'message' => 'lawn not found'})
       end
     end
   end
@@ -47,7 +47,7 @@ describe LawnController, type: :controller do
     context 'when id is invalid' do
       it 'should return nothing' do
         put :update, id: 320
-        expect(response.body).to eq('[]')
+        expect(json_response).to eq({'message' => 'lawn not found'})
       end
     end
   end
@@ -64,7 +64,7 @@ describe LawnController, type: :controller do
     context 'when id is invalid' do
       it 'should return nothing' do
         delete :destroy, id: 33
-        expect(response.body).to eq('[]')
+        expect(json_response).to eq({'message' => 'lawn not found'})
       end
     end
   end

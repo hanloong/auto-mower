@@ -63,10 +63,25 @@ GET: /lawn/4
 Response
 ```json
 {
-  "id": 4,
+  "id": 2,
   "width": 5,
   "height": 5,
-  "mowers": []
+  "mowers": [
+    {
+      "id": 5,
+      "x": 1,
+      "y": 3,
+      "heading": "N",
+      "commands": ""
+    },
+    {
+      "id": 6,
+      "x": 5,
+      "y": 1,
+      "heading": "E",
+      "commands": ""
+    }
+  ]
 }
 ```
 ### PUT `/lawn/4`
@@ -131,40 +146,6 @@ Response
   "heading": "E",
   "commands": "MLRMM"
 }
-```
-### GET '/lawn/:lawn_id/mower'
-
-Returns all mowers for the lawn by id
-
-Request
-```
-GET: /lawn/1/mower
-```
-
-Response
-```json
-[
-  {
-    "id": 5,
-    "x": 1,
-    "y": 2,
-    "heading": "N",
-    "commands": "LMLMLMLMM",
-    "lawn_id": 2,
-    "created_at": "2016-01-18T00:46:01.240Z",
-    "updated_at": "2016-01-18T00:46:01.240Z"
-  },
-  {
-    "id": 6,
-    "x": 3,
-    "y": 3,
-    "heading": "E",
-    "commands": "MMRMMRMRRM",
-    "lawn_id": 2,
-    "created_at": "2016-01-18T00:46:26.495Z",
-    "updated_at": "2016-01-18T00:46:26.495Z"
-  }
-]
 ```
 
 ### GET `/lawn/:lawn_id/mower/:id`
@@ -231,7 +212,7 @@ Response
 
 ### POST `/lawn/:id/execute`
 
-Runs the mowers across the lawns outputting the final state.
+nRuns the mowers across the lawns outputting the final state.
 
 ```josn
 POST /lawn/1/execute

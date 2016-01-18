@@ -1,5 +1,6 @@
 class LawnController < ApplicationController
   before_action :set_lawn, except: :create
+  before_action :check_lawn, except: :create
 
   def create
     lawn = Lawn.create lawn_params
@@ -10,14 +11,10 @@ class LawnController < ApplicationController
   end
 
   def show
-    render json: [] and return unless @lawn
-
     render json: @lawn
   end
 
   def update
-    render json: [] and return unless @lawn
-
     if @lawn.update lawn_params
       render json: @lawn and return
     end
@@ -25,8 +22,6 @@ class LawnController < ApplicationController
   end
 
   def destroy
-    render json: [] and return unless @lawn
-
     @lawn.destroy
     render json: { status: 'ok' }
   end
@@ -47,5 +42,11 @@ class LawnController < ApplicationController
 
   def set_lawn
     @lawn = Lawn.find_by id: params[:id]
+  end
+
+  def check_lawn
+    unless @lawn
+      render json: {message: 'lawn not found'} and return
+    end
   end
 end
