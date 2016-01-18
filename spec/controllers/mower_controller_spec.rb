@@ -15,6 +15,15 @@ describe MowerController, type: :controller do
     }
   end
 
+  describe '#idex' do
+    let!(:mower) { Mower.create params }
+
+    it 'should return a lawn object in array' do
+      get :index,lawn_id: mower.lawn_id
+      expect(response.body).to eq([mower.to_json])
+    end
+  end
+
   describe '#create' do
     it 'should create a new mower' do
       expect do

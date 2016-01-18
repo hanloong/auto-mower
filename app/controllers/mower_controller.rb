@@ -7,6 +7,10 @@ class MowerController < ApplicationController
     render json: @mower
   end
 
+  def index
+    render json: @lawn.mowers
+  end
+
   def create
     mower = Mower.create mower_params.merge(lawn: @lawn)
     if mower.persisted?
