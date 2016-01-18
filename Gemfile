@@ -1,3 +1,4 @@
-gem 'rspec'
+source 'https://rubygems.org'
 
+gem 'rspec'
 gem 'pry'
